@@ -25,19 +25,20 @@ io.on("connection", (socket) => {
     });
   });
 
-  // SHELL COMMANDS
+  // SHELL
   socket.on("shell", (cmd: string) => {
     exec(cmd, { cwd: PROJECT_DIR }, (err, stdout, stderr) => {
       socket.emit("terminal-output", stdout || stderr);
     });
   });
 
-  // FILE SYSTEM
+  // CREATE FILE
   socket.on("create-file", (name: string) => {
     fs.writeFileSync(`${PROJECT_DIR}/${name}`, "");
     socket.emit("file-update");
   });
 
+  // LIST FILES
   socket.on("list-files", () => {
     const files = fs.readdirSync(PROJECT_DIR);
     socket.emit("file-list", files);
@@ -45,5 +46,5 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(3001, "0.0.0.0", () => {
-  console.log("Server running on 3001");
+  console.log("Socket server running on 3001");
 });
