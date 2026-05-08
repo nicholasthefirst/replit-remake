@@ -1,2 +1,5 @@
-const nextConfig = {};
+const nextConfig = {
+  allowedDevOrigins: ["*"]
+};
+
 module.exports = nextConfig;
